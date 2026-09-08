@@ -1,36 +1,81 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# ScanOrder (web)
 
-## Getting Started
+Mobile-first PWA for med-sales ScanOrder — Next.js implementation of Phases 0–4 from `../SCANORDER_Implementation_Plan.md`.
 
-First, run the development server:
+## Run
+
+```bash
+cd web
+npm install
+npm run dev
+```
+
+Open [http://localhost:3000](http://localhost:3000).
+
+## Architecture
+
+```
+src/app/                    routes (`/` scanner, `/auth/callback`, `/api/*` BFF)
+src/components/ui/          shared UI (toast, snack, keypad, loading)
+src/components/features/    auth, scan, cart overlays
+src/components/hooks/       feature hooks
+src/hooks/                  app-wide hooks
+src/constants/              roles, demo catalog
+src/interfaces/             TypeScript types
+src/lib/                    GS1, cart, expiry, IndexedDB, token storage
+src/services/               shop HTTP + OAuth + product resolve
+src/store/                  Zustand
+```
+
+Screen flow: OAuth login → optional delivery-address pick → scanner overlays on `/`.
+
+## Login (OAuth 2.0)
+
+```
+Anmelden → shop ?cl=oauthauthorize (PKCE)
+  → /auth/callback?code
+  → POST /api/auth/token (server adds client_secret)
+  → GET /api/auth/me
+  → sessionStorage access_token
+Scan → POST /api/articles with the same Bearer token
+  → shop ?cl=articleapi&fnc=getArticles
+    camera: { "oxean": ["…"] }
+    Nummer → EAN: { "oxean": ["…"] }
+    Nummer → Artikelnummer: { "oxartnum": ["…"] }
+```
+
+Copy `web/.env.example` to `web/.env.local` and set `NEXT_PUBLIC_OAUTH_CLIENT_ID` and `OAUTH_CLIENT_SECRET`. Register redirect URIs `http://localhost:3000/auth/callback` and the Vercel origin `/auth/callback` on the OXID OAuth client (scopes `profile address api`). Local HTTP needs `mwv_oauthAllowLocalHttp` on the shop.
+
+## Demo flow
+
+1. **Mit Shop anmelden** (OAuth) → optional Lieferadresse → scanner
+2. Tap a **demo chip** (or **Nummer**) to resolve a product
+3. Set quantity → **In den Warenkorb**
+4. Open cart → role CTA (`Jetzt bestellen` / `Zur Freigabe senden`)
+5. Besteller/Freigeber: PIN **1234**
+
+### Dev controls (bottom strip)
+
+| Control | Effect |
+|---------|--------|
+| erfasser / besteller / freigeber | Role |
+| offline | Amber net bar + outbox path |
+| preis± | Price conflict on submit |
+| lot:ok/warn/bad | UDI expiry scenario |
+| session↓ | Session expiry (cart kept) |
+| outbox | Outbox view |
+
+## Stack
+
+- Next.js App Router + TypeScript
+- Zustand + IndexedDB (`idb`) for cart/session/outbox drafts
+- Design tokens from `scanorder-mockup-v4.html`
+
+## Scripts
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm run build
+npm test
+npm run lint
 ```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.

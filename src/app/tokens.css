@@ -1,0 +1,44 @@
+:root {
+  --paper: #e7eae8;
+  --paper-2: #dde2e0;
+  --paper-line: #c6cecb;
+  --ink: #141a19;
+  --ink-soft: #4e5a57;
+  --ink-faint: #7c8785;
+
+  --navy: #0a1628;
+  --navy-2: #111f35;
+  --navy-3: #1a2b45;
+  --navy-border: #263a56;
+
+  --cyan: #00e5c7;
+  --cyan-dim: #0c8e7d;
+  --magenta: #ff3366;
+  --amber: #f5a524;
+  --violet: #9966ff;
+
+  --on-dark: #eaf2f0;
+  --on-dark-soft: #93a6b4;
+  --cta-ink: #04231f;
+
+  --r-s: 6px;
+  --r-m: 12px;
+  --r-l: 20px;
+
+  --font-ui: var(--font-archivo), system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: var(--font-ibm-plex-mono), ui-monospace, "SF Mono", Menlo, monospace;
+
+  /* Extra top inset: punch-hole / Dynamic Island sit above content on many phones. */
+  --safe-top: calc(env(safe-area-inset-top, 0px) + 28px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
