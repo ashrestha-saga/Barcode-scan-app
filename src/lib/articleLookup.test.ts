@@ -45,6 +45,7 @@ describe("mapShopArticleToProduct", () => {
   it("maps shop fields used on the product sheet", () => {
     const product = mapShopArticleToProduct(
       {
+        oxid: "a1b2c3d4e5f678901234567890abcdef",
         oxartnum: "1705205501",
         oxtitle: "SCHMITZ varimed Untersuchungsliege",
         oxshortdesc: "Polster classic, silbergrau",
@@ -58,6 +59,7 @@ describe("mapShopArticleToProduct", () => {
       },
       "4006144615694",
     );
+    expect(product?.oxid).toBe("a1b2c3d4e5f678901234567890abcdef");
     expect(product?.sku).toBe("1705205501");
     expect(product?.name).toContain("Untersuchungsliege");
     expect(product?.price).toBe(417);

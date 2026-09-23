@@ -25,6 +25,7 @@ import {
   profileUserLabel,
   profileDisplayName,
   billingCompanyFromProfile,
+  triggeredByLabel,
 } from "@/lib/oauthProfile";
 import { clearEncryptedSessionPin, saveEncryptedSessionPin } from "@/lib/pinVault";
 import { isValidSessionPin } from "@/lib/sessionPin";
@@ -929,7 +930,10 @@ export const useAppStore = create<AppState>((set, get) => ({
       name: a.name,
       company: a.company,
       site: a.site,
-      userLabel: s.userLabel || s.username || "Benutzer",
+      userLabel: triggeredByLabel(
+        s.billingCompany,
+        s.userLabel || s.username || "Benutzer",
+      ),
       roleLabel: ORDER_ROLE.label,
       status: "pending",
     };
@@ -999,7 +1003,10 @@ export const useAppStore = create<AppState>((set, get) => ({
         name: a.name,
         company: a.company,
         site: a.site,
-        userLabel: get().userLabel || get().username || "Benutzer",
+        userLabel: triggeredByLabel(
+          get().billingCompany,
+          get().userLabel || get().username || "Benutzer",
+        ),
         roleLabel: ORDER_ROLE.label,
         status: "success",
       };
@@ -1033,7 +1040,10 @@ export const useAppStore = create<AppState>((set, get) => ({
           name: "",
           company: "",
           site: "",
-          userLabel: get().userLabel || "Benutzer",
+          userLabel: triggeredByLabel(
+            get().billingCompany,
+            get().userLabel || "Benutzer",
+          ),
           roleLabel: ORDER_ROLE.label,
           status: "failed" as const,
         }),

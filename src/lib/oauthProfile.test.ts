@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import type { OAuthProfile } from "@/interfaces/auth";
-import { shippingAddressesFromProfile, billingCompanyFromProfile, profileDisplayName, profileUserLabel } from "@/lib/oauthProfile";
+import { shippingAddressesFromProfile, billingCompanyFromProfile, profileDisplayName, profileUserLabel, triggeredByLabel } from "@/lib/oauthProfile";
 
 const profile: OAuthProfile = {
   email: "max@example.com",
@@ -151,5 +151,18 @@ describe("profileDisplayName", () => {
 describe("billingCompanyFromProfile", () => {
   it("returns the billing address company", () => {
     expect(billingCompanyFromProfile(profile)).toBe("ACME GmbH");
+  });
+});
+
+describe("triggeredByLabel", () => {
+  it("puts parent company first and child name in parentheses", () => {
+    expect(triggeredByLabel("ACME GmbH", "Ray Victor")).toBe(
+      "ACME GmbH (Ray Victor)",
+    );
+  });
+
+  it("returns child name only when company is missing", () => {
+    expect(triggeredByLabel("", "Ray Victor")).toBe("Ray Victor");
+    expect(triggeredByLabel("   ", "Ray Victor")).toBe("Ray Victor");
   });
 });

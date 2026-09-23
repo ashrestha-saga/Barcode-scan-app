@@ -22,7 +22,7 @@ export function CartRows({ onRemove }: { onRemove: (id: string) => void }) {
           <div>
             <div className="so-inm">{item.name}</div>
             <div className="so-isub">
-              {item.sku}
+              Art.Nr.: {item.sku}
               {item.lot ? ` · Charge ${item.lot}` : ""}
               {item.expiry ? ` · VHD ${item.expiry}` : ""}
               {` · ${eurUnit(item.unitPrice)}`}

@@ -179,11 +179,6 @@ export function ViewHost() {
                   </div>
                 </div>
               </div>
-              <div className="so-authnote" style={{ textAlign: "left" }}>
-                Autorisierung <b>
-                  {done.roleLabel} · {done.custnr}
-                </b>
-              </div>
               <div className="so-sheet-actions" style={{ marginTop: 22 }}>
                 {done.status === "failed" ? (
                   <>

@@ -75,7 +75,12 @@ export async function POST(req: Request) {
     console.info("[api/articles] mapped products", {
       lookupKey,
       shopRows: rows.length,
-      products: products.map((p) => ({ sku: p.sku, name: p.name, price: p.price })),
+      products: products.map((p) => ({
+        oxid: p.oxid,
+        sku: p.sku,
+        name: p.name,
+        price: p.price,
+      })),
     });
     return NextResponse.json({ products });
   } catch (err) {

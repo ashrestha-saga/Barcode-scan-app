@@ -72,6 +72,7 @@ export function buildCartItem(
   const factor = unitFactor(product, unit);
   return {
     id: newId(),
+    ...(product.oxid ? { oxid: product.oxid } : {}),
     sku: product.sku,
     name: product.name,
     init: product.init,

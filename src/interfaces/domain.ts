@@ -57,6 +57,8 @@ export interface ProductUnit {
 }
 
 export interface Product {
+  /** OXID eShop article id (from getArticles). */
+  oxid?: string;
   sku: string;
   init: string;
   name: string;
@@ -89,6 +91,8 @@ export interface LotInfo {
 
 export interface CartItem {
   id: string;
+  /** OXID eShop article id when known from lookup. */
+  oxid?: string;
   sku: string;
   name: string;
   init: string;

@@ -1,5 +1,5 @@
 const DEFAULT_BASE_URL = "https://shop1.medsadba-mwv01.mhosts.de";
-const OAUTH_SCOPE = "profile address api";
+const DEFAULT_OAUTH_SCOPE = "objects.me.read api";
 
 export function getShopBaseUrl(): string {
   return (
@@ -18,7 +18,11 @@ export function getOAuthClientSecret(): string {
 }
 
 export function getOAuthScope(): string {
-  return OAUTH_SCOPE;
+  return (
+    process.env.NEXT_PUBLIC_OAUTH_SCOPE?.trim() ||
+    process.env.OAUTH_SCOPE?.trim() ||
+    DEFAULT_OAUTH_SCOPE
+  );
 }
 
 export function getOAuthAuthorizeUrl(): string {

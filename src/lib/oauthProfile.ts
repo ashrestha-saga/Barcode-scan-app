@@ -69,6 +69,14 @@ export function billingCompanyFromProfile(profile: OAuthProfile): string {
   return text(profile.billing?.company);
 }
 
+/** Checkout “Ausgelöst von”: parent company (child) when company exists, else actor only. */
+export function triggeredByLabel(company: string, actorLabel: string): string {
+  const actor = text(actorLabel) || "Benutzer";
+  const parentCompany = text(company);
+  if (parentCompany) return `${parentCompany} (${actor})`;
+  return actor;
+}
+
 export function profileUserLabel(profile: OAuthProfile): string {
   const person = [text(profile.first_name), text(profile.last_name)]
     .filter(Boolean)

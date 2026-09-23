@@ -67,7 +67,7 @@ export function SheetHost() {
                 <div className="so-udi">
                   <div className="so-udi-head">
                     <span className="so-badge-udi">UDI / GS1</span>
-                    <span style={{ fontFamily: "var(--font-mono)", fontSize: 10, color: "var(--on-dark-soft)" }}>
+                    <span style={{ fontFamily: "var(--font-mono)", fontSize: 13, color: "var(--on-dark-soft)" }}>
                       Charge {pending.lot.lot}
                     </span>
                   </div>

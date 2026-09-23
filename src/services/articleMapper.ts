@@ -58,7 +58,10 @@ export function mapShopArticleToProduct(
     .filter(Boolean)
     .join(" · ");
 
+  const oxid = text(article.oxid);
+
   return {
+    ...(oxid ? { oxid } : {}),
     sku,
     init: initials(name),
     name,
