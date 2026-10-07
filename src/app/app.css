@@ -839,43 +839,8 @@
   background: var(--cyan);
 }
 
-.so-units {
-  display: flex;
-  gap: 7px;
-  margin-top: 16px;
-}
-
-.so-units button {
-  flex: 1;
-  min-height: 44px;
-  border-radius: var(--r-s);
-  border: 1px solid var(--navy-border);
-  background: transparent;
-  color: var(--on-dark-soft);
-  font-family: var(--font-ui);
-  font-size: 15.5px;
-  font-weight: 600;
-  cursor: pointer;
-  line-height: 1.3;
-}
-
-.so-units button b {
-  display: block;
-  font-family: var(--font-mono);
-  font-size: 12.5px;
-  font-weight: 500;
-  opacity: 0.75;
-  margin-top: 2px;
-}
-
-.so-units button[aria-pressed="true"] {
-  border-color: var(--cyan);
-  color: var(--cyan);
-  background: rgba(0, 229, 199, 0.09);
-}
-
 .so-qty {
-  margin-top: 14px;
+  margin-top: 16px;
   display: grid;
   grid-template-columns: 56px 1fr 56px;
   gap: 10px;

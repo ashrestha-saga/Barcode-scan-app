@@ -16,7 +16,6 @@ export function SheetHost() {
   const sheet = useAppStore((s) => s.sheet);
   const closeSheet = useAppStore((s) => s.closeSheet);
   const pending = useAppStore((s) => s.pending);
-  const setUnit = useAppStore((s) => s.setUnit);
   const stepQty = useAppStore((s) => s.stepQty);
   const setQtyFromPad = useAppStore((s) => s.setQtyFromPad);
   const clearPad = useAppStore((s) => s.clearPad);
@@ -104,25 +103,6 @@ export function SheetHost() {
                 </div>
               )}
 
-              <div className="so-units" role="group" aria-label="Einheit">
-                <button
-                  type="button"
-                  aria-pressed={pending.unit === "stk"}
-                  onClick={() => setUnit("stk")}
-                >
-                  Stück
-                  <b>1er</b>
-                </button>
-                <button
-                  type="button"
-                  aria-pressed={pending.unit === "vpe"}
-                  onClick={() => setUnit("vpe")}
-                >
-                  {pending.product.vpeName}
-                  <b>×{pending.product.vpe}</b>
-                </button>
-              </div>
-
               <div className="so-qty">
                 <button type="button" className="so-step" onClick={() => stepQty(-1)}>
                   −
@@ -136,9 +116,6 @@ export function SheetHost() {
               </div>
               <div className={`so-qty-note ${pending.product.min > 1 ? "so-qty-warn" : ""}`}>
                 Mindestmenge <b>{pending.product.min}</b>
-                {pending.unit === "vpe"
-                  ? ` · entspricht ${pending.qty * pending.product.vpe} Stück`
-                  : null}
               </div>
 
               <Keypad

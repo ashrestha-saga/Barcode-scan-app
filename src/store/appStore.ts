@@ -170,7 +170,6 @@ interface AppState {
   scanSku: (sku: string, lookupKey?: ArticleLookupKey) => Promise<void>;
   retryLastScan: () => Promise<void>;
   resolveManual: () => Promise<void>;
-  setUnit: (u: UnitKind) => void;
   stepQty: (delta: number) => void;
   setQtyFromPad: (digit: string) => void;
   clearPad: () => void;
@@ -759,17 +758,10 @@ export const useAppStore = create<AppState>((set, get) => ({
     await get().scanSku(code, get().manualLookupMode);
   },
 
-  setUnit: (u) => {
-    const p = get().pending;
-    if (!p) return;
-    const qty = Math.max(p.product.min, u === "vpe" ? 1 : p.product.min);
-    set({ pending: { ...p, unit: u, qty, pad: "" } });
-  },
-
   stepQty: (delta) => {
     const p = get().pending;
     if (!p) return;
-    const step = p.unit === "vpe" ? 1 : Math.max(1, p.product.min);
+    const step = Math.max(1, p.product.min);
     const next = Math.max(step, p.qty + delta * step);
     set({ pending: { ...p, qty: next, pad: "" } });
   },
